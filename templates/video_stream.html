@@ -12,7 +12,7 @@
 <script>
     if (window.Worker) {
         console.log('worker, exists');
-        var worker = new Worker('worker.js')
+        var worker = new Worker("{{ url_for('static', filename='js/worker.js') }}")
         var img = document.getElementById("liveImg");
         var arrayBuffer;
 
