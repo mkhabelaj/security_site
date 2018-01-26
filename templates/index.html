@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Security camera</title></head>
+<body>
+    <h1>Available streams</h1>
+    <ul>
+        {% for result in results %}
+        <li>
+            <a href="{{url_for('video_stream', **result)}}">camera {{ result.camera_number }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
