@@ -16,7 +16,7 @@
         var img = document.getElementById("liveImg");
         var arrayBuffer;
 
-        var ws = new WebSocket("ws://localhost:{{ result.get('websocket_server_port') }}/{{ result.get('stream_secret') }}");
+        var ws = new WebSocket("ws://{{ result.get('ip_address') }}:{{ result.get('websocket_server_port') }}/{{ result.get('stream_secret') }}");
         ws.binaryType = 'arraybuffer';
 
         ws.onopen = function () {
