@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>livecamera</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Camera {{ result.get('camera_number') }}</h1>
+<img id="liveImg" width="480" height="360">
+
+</body>
+<script>
+    if (window.Worker) {
+        console.log('worker, exists');
+        var worker = new Worker('worker.js')
+        var img = document.getElementById("liveImg");
+        var arrayBuffer;
+
+        var ws = new WebSocket("ws://localhost:{{ result.get('websocket_server_port') }}/{{ result.get('stream_secret') }}");
+        ws.binaryType = 'arraybuffer';
+
+        ws.onopen = function () {
+            console.log("connection was established");
+        };
+        ws.onmessage = function (evt) {
+            arrayBuffer = evt.data;
+            worker.postMessage(new Uint8Array(arrayBuffer))
+        };
+        worker.onmessage = function (e) {
+            img.src = "data:image/jpeg;base64," + e.data;
+        }
+    }
+
+</script>
+</html>
