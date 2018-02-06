@@ -2,6 +2,7 @@ import os
 import psycopg2
 from flask import Flask, render_template, request
 from psycopg2.extras import RealDictCursor
+from flask_bootstrap import Bootstrap
 
 DATABASE_NAME = 'cam_config'
 TABLE_NAME = 'config'
@@ -12,7 +13,7 @@ conn = psycopg2.connect(user=USER, database=DATABASE_NAME, password=PASSWORD)
 cur = conn.cursor(cursor_factory=RealDictCursor)
 
 application = Flask(__name__)
-
+Bootstrap(application)
 
 @application.route("/")
 def index():

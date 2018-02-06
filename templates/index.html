@@ -1,16 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Security camera</title></head>
-<body>
-    <h1>Available streams</h1>
-    <ul>
-        {% for result in results %}
-        <li>
-            <a href="{{url_for('video_stream', **result)}}">camera {{ result.camera_number }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Security camera{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1>Available streams</h1>
+        <table class="table">
+            <tr>
+                <th>Stream</th>
+                <th>Availability</th>
+            </tr>
+            {% for result in results %}
+                <tr>
+                    <td><a href="{{url_for('video_stream', **result)}}">camera {{ result.camera_number }}</a></td>
+                    <td>Available</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
