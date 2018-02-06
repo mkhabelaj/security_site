@@ -3,10 +3,11 @@
 <head>
     <title>livecamera</title>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
 <h1>Camera {{ result.get('camera_number') }}</h1>
-<img id="liveImg" width="480" height="360">
+<img id="liveImg">
 
 </body>
 <script>

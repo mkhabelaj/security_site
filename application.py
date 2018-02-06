@@ -1,7 +1,5 @@
 import os
-
 import psycopg2
-from builtins import str
 from flask import Flask, render_template, request
 from psycopg2.extras import RealDictCursor
 
