@@ -1,40 +1,62 @@
 {% extends "base.html" %}
 {% block styles %}
-{{super()}}
-<link rel="stylesheet" href="{{url_for('.static', filename='css/video_stream.css')}}">
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/video_stream.css') }}">
 {% endblock %}
 {% block title %}livecamera{% endblock %}
 
 {% block content %}
     <div class="container-fluid">
-        <h1 class="text-center text-success">Camera {{ result.get('camera_number') }}</h1>
-        <img id="liveImg" class="img-responsive center-block">
+        <div class="row-fluid">
+            <div class="col-md-12">
+                <h1 class="text-center text-success">Camera {{ result.get('camera_number') }}</h1>
+                <img id="liveImg" class="img-responsive center-block">
+            </div>
+        </div>
+        <div class="row-fluid">
+            {# control center #}
+            <div class="col-md-4 ">
+                {#  zoom and enlarge / record video and capture images#}
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-4 ">
+                {#  zoom and enlarge / record video and capture images#}
+                <h3>Camera Settings</h3>
+                <div class="toolbar">
+                    <button name="motion-detection" type="button" class="btn btn-default" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Motion Detector
+                    </button>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
-{{super()}}
+    {{ super() }}
     <script>
-    if (window.Worker) {
-        console.log('worker, exists');
-        var worker = new Worker("{{ url_for('static', filename='js/worker.js') }}")
-        var img = document.getElementById("liveImg");
-        var arrayBuffer;
+        if (window.Worker) {
+            console.log('worker, exists');
+            var worker = new Worker("{{ url_for('static', filename='js/worker.js') }}")
+            var img = document.getElementById("liveImg");
+            var arrayBuffer;
 
-        var ws = new WebSocket("ws://{{ result.get('ip_address') }}:{{ result.get('websocket_server_port') }}/{{ result.get('stream_secret') }}");
-        ws.binaryType = 'arraybuffer';
+            var ws = new WebSocket("ws://{{ result.get('ip_address') }}:{{ result.get('websocket_server_port') }}/{{ result.get('stream_secret') }}");
+            ws.binaryType = 'arraybuffer';
 
-        ws.onopen = function () {
-            console.log("connection was established");
-        };
-        ws.onmessage = function (evt) {
-            arrayBuffer = evt.data;
-            worker.postMessage(new Uint8Array(arrayBuffer))
-        };
-        worker.onmessage = function (e) {
-            img.src = "data:image/jpeg;base64," + e.data;
+            ws.onopen = function () {
+                console.log("connection was established");
+            };
+            ws.onmessage = function (evt) {
+                arrayBuffer = evt.data;
+                worker.postMessage(new Uint8Array(arrayBuffer))
+            };
+            worker.onmessage = function (e) {
+                img.src = "data:image/jpeg;base64," + e.data;
+            }
         }
-    }
 
-</script>
+    </script>
 {% endblock %}
