@@ -3,6 +3,13 @@
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('.static', filename='css/style.css') }}">
 {% endblock %}
+{#{% block navbar %}#}
+{#<div class="navbar navbar-fixed-top">#}
+{#  <a class="navbar-brand" href="#">#}
+{#        <img alt="Brand" src="...">#}
+{#      </a>#}
+{#</div>#}
+{#{% endblock %}#}
 
 {% block scripts %}
     {{ super() }}

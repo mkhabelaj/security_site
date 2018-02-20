@@ -24,20 +24,8 @@ $(document).ready(function () {
 
 $("button").click(function (e) {
     var name = e.target.name;
-    console.log();
-    if (name == "decrease-res") {
         data['name'] = name;
         data['value'] = name;
-    } else if (name == "increase-res") {
-        data['name'] = name;
-        data['value'] = name;
-    } else if (name == "reset-min-max") {
-        data['name'] = name;
-        data['value'] = name;
-    } else if (name == "motion-detection") {
-        data['name'] = name;
-        data['value'] = name;
-    }
 
     console.log(data)
     $.ajax({
